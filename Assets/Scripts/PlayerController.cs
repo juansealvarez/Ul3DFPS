@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        mRb.velocity = mDirection.y * speed * Vector3.forward;
+        mRb.velocity = mDirection.y * speed * transform.forward;
 
 
         Debug.DrawRay(
