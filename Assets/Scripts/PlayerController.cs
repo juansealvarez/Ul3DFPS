@@ -19,18 +19,14 @@ public class PlayerController : MonoBehaviour
     {
         mRb = GetComponent<Rigidbody>();
         cameraMain = transform.Find("Main Camera");
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
-        mRb.velocity = mDirection.y * speed * transform.forward;
-
-
-        Debug.DrawRay(
-            transform.position,
-            transform.forward,
-            Color.red
-        );
+        mRb.velocity = mDirection.y * speed * transform.forward
+            + mDirection.x * speed * transform.right;
 
         transform.Rotate(
             Vector3.up,
