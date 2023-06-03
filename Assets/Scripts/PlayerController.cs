@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+    private float WalkingSpeed;
+
+    private float RunnigMultiplier;
+
     private float speed;
     [SerializeField]
     private float turnSpeed;
@@ -21,10 +25,20 @@ public class PlayerController : MonoBehaviour
         cameraMain = transform.Find("Main Camera");
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        RunnigMultiplier = 1.5f;
     }
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl))
+        {
+            speed = WalkingSpeed * RunnigMultiplier;
+        }else
+        {
+            speed = WalkingSpeed;
+        }
+
         mRb.velocity = mDirection.y * speed * transform.forward
             + mDirection.x * speed * transform.right;
 

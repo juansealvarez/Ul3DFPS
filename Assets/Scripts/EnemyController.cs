@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public Transform Player;
+
     public float Speed = 2f;
     public float AwakeRadio = 2f;
+
+    public float AttackDistance = 1f;
 
     private Animator mAnimator;
     private Rigidbody mRb;
@@ -22,6 +26,15 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         var collider = IsPlayerNearby();
+        var distancia = Vector3.Distance(
+            Player.transform.position,
+            transform.position
+        );
+        if (distancia <= AttackDistance)
+        {
+            mAnimator.SetTrigger("Attacking");
+            mAnimator.SetInteger("RandomAttack", Random.Range(0,2));
+        }
         if (collider != null)
         {
             // caminar
