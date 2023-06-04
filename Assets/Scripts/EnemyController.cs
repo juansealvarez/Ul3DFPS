@@ -16,15 +16,21 @@ public class EnemyController : MonoBehaviour
 
     private Vector2 mDirection;  // XZ
 
+    private AudioSource mAudioSource;
+    [SerializeField]
+    private List<AudioClip> audioList;
+
     private void Start()
     {
         mRb = GetComponent<Rigidbody>();
         mAnimator = transform
             .GetComponentInChildren<Animator>(false);
+        mAudioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
+        //mAudioSource.PlayOneShot(audioList[Random.Range(0,1)]);
         var collider = IsPlayerNearby();
         var distancia = Vector3.Distance(
             Player.transform.position,
@@ -32,6 +38,7 @@ public class EnemyController : MonoBehaviour
         );
         if (distancia <= AttackDistance)
         {
+            //mAudioSource.PlayOneShot(audioList[Random.Range(2,3)]);
             mAnimator.SetTrigger("Attacking");
             mAnimator.SetInteger("RandomAttack", Random.Range(0,2));
         }
