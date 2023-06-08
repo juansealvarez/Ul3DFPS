@@ -32,6 +32,8 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        //mAudioSource.PlayOneShot(audioList[Random.Range(0,2)]);
+
         var collider = IsPlayerInAttackArea();
         if (collider != null && !mIsAttacking)
         {
@@ -40,17 +42,16 @@ public class EnemyController : MonoBehaviour
                 0f,
                 0f
             );
+            //mAudioSource.PlayOneShot(audioList[Random.Range(2,4)]);
             mAnimator.SetBool("IsWalking", false);
             mAnimator.SetTrigger("Attacking");
             mAnimator.SetInteger("RandomAttack", Random.Range(0,3));
-            Debug.Log("Ataca");
             return;
         }
-        //mAudioSource.PlayOneShot(audioList[Random.Range(0,1)]);
+        
         
         collider = IsPlayerNearby();
 
-        //mAudioSource.PlayOneShot(audioList[Random.Range(2,3)]);
         if (collider != null && !mIsAttacking)
         {
             // caminar

@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private float speed;
     [SerializeField]
-    private float turnSpeed;
+    public float turnSpeed;
 
     private Rigidbody mRb;
     private Vector2 mDirection;
@@ -27,6 +27,12 @@ public class PlayerController : MonoBehaviour
     private GameObject otherObjectParticles;
 
     private Animator mAnimator;
+
+    private AudioSource mAudioSource;
+    [SerializeField]
+    private List<AudioClip> audioList;
+
+    private Transform gun;
 
     private void Start()
     {
@@ -41,6 +47,8 @@ public class PlayerController : MonoBehaviour
             .GetComponentInChildren<Animator>(false);
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        mAudioSource = GetComponentInChildren<AudioSource>(false);
 
         RunnigMultiplier = 1.5f;
     }
@@ -65,6 +73,7 @@ public class PlayerController : MonoBehaviour
         cameraMain.GetComponent<CameraMovement>().RotateUpDown(
             -turnSpeed * Time.deltaTime * mDeltaLook.y
         );
+    
     }
 
     private void OnMove(InputValue value)
@@ -81,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         if (value.isPressed)
         {
+            mAudioSource.PlayOneShot(audioList[0]);
             mAnimator.SetTrigger("GunShooting");
             Shoot();
         }
