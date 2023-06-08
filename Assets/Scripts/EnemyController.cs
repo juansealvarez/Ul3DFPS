@@ -9,12 +9,14 @@ public class EnemyController : MonoBehaviour
     public float Speed = 2f;
     public float AwakeRadio = 2f;
 
-    public float AttackDistance = 1f;
+    public float AttackRadio = 0.5f;
 
     private Animator mAnimator;
     private Rigidbody mRb;
 
     private Vector2 mDirection;  // XZ
+
+    private bool mIsAttacking = false;
 
     private AudioSource mAudioSource;
     [SerializeField]
@@ -30,19 +32,26 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        //mAudioSource.PlayOneShot(audioList[Random.Range(0,1)]);
-        var collider = IsPlayerNearby();
-        var distancia = Vector3.Distance(
-            Player.transform.position,
-            transform.position
-        );
-        if (distancia <= AttackDistance)
+        var collider = IsPlayerInAttackArea();
+        if (collider != null && !mIsAttacking)
         {
-            //mAudioSource.PlayOneShot(audioList[Random.Range(2,3)]);
+            mRb.velocity = new Vector3(
+                0f,
+                0f,
+                0f
+            );
+            mAnimator.SetBool("IsWalking", false);
             mAnimator.SetTrigger("Attacking");
-            mAnimator.SetInteger("RandomAttack", Random.Range(0,2));
+            mAnimator.SetInteger("RandomAttack", Random.Range(0,3));
+            Debug.Log("Ataca");
+            return;
         }
-        if (collider != null)
+        //mAudioSource.PlayOneShot(audioList[Random.Range(0,1)]);
+        
+        collider = IsPlayerNearby();
+
+        //mAudioSource.PlayOneShot(audioList[Random.Range(2,3)]);
+        if (collider != null && !mIsAttacking)
         {
             // caminar
             var playerPosition = collider.transform.position;
@@ -81,5 +90,26 @@ public class EnemyController : MonoBehaviour
         );
         if (colliders.Length == 1) return colliders[0];
         else return null;
+    }
+
+    private Collider IsPlayerInAttackArea()
+    {
+        var colliders = Physics.OverlapSphere(
+            transform.position,
+            AttackRadio,
+            LayerMask.GetMask("Player")
+        );
+        if (colliders.Length == 1) return colliders[0];
+        else return null;
+    }
+
+    public void StartAttack()
+    {
+        mIsAttacking = true;
+    }
+
+    public void StopAttack()
+    {
+        mIsAttacking = false;
     }
 }
