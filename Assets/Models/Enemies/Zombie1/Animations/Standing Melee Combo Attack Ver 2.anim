@@ -103818,7 +103818,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-<<<<<<< Updated upstream
   - time: 2.5
     functionName: EnableHitbox
     data: 
@@ -103827,9 +103826,6 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 3.5
-=======
-  - time: 4.2
->>>>>>> Stashed changes
     functionName: StopAttack
     data: 
     objectReferenceParameter: {fileID: 0}
