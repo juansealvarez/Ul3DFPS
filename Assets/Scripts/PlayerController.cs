@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private float speed;
     [SerializeField]
     public float turnSpeed;
+    public float PlayerHealth = 20f;
+    public float GunDamage = 1f;
 
     private Rigidbody mRb;
     private Vector2 mDirection;
@@ -114,12 +116,33 @@ public class PlayerController : MonoBehaviour
             {
                 var bloodPS = Instantiate(bloodObjectParticles, hit.point, Quaternion.identity);
                 Destroy(bloodPS, 3f);
+                var enemyController = hit.collider.GetComponent<EnemyController>();
+                enemyController.TakeDamage(GunDamage);
             }else
             {
                 var otherPS = Instantiate(otherObjectParticles, hit.point, Quaternion.identity);
                 otherPS.GetComponent<ParticleSystem>().Play();
                 Destroy(otherPS, 3f);
             }
+        }
+    }
+
+    public void TakeDamage(float Damage)
+    {
+        PlayerHealth -= Damage;
+        if (PlayerHealth <= 0)
+        {
+            // fin del juego
+            Debug.Log("Fin del juego");
+        }
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.CompareTag("EnemyAttack"))
+        {
+            Debug.Log("Player recibio daño");
+            TakeDamage(-1f);
         }
     }
 }

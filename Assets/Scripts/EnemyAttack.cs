@@ -10,12 +10,15 @@ public class EnemyAttack : MonoBehaviour
     public void StartAttack()
     {
         controller.StartAttack();
-        Debug.Log("Entro");
     }
 
     public void StopAttack()
     {
         controller.StopAttack();
-        Debug.Log("Salio");
+    }
+
+    public void EnableHitbox()
+    {
+        controller.EnableHitbox();
     }
 }
