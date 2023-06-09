@@ -54,7 +54,7 @@ public class EnemyController : MonoBehaviour
             navMeshAgent.isStopped = true;
             mAnimator.SetBool("IsWalking", false);
             mAnimator.SetTrigger("Attacking");
-            mAnimator.SetInteger("RandomAttack", Random.Range(0,3));
+            mAnimator.SetInteger("RandomAttack", 0); //Random.Range(0,3)
             return;
         }
         
