@@ -30,11 +30,26 @@ public class PlayerController : MonoBehaviour
 
     private Animator mAnimator;
 
+    private Animator CameraAnimator;
+
     private AudioSource mAudioSource;
     [SerializeField]
     private List<AudioClip> audioList;
+    [System.NonSerialized]
+    public bool IsDead = false;
 
     private Transform gun;
+
+    public GameObject PlayerCapsulle;
+    public GameObject shotgun;
+
+    public GameObject DeadScreen;
+    public GameObject UI;
+
+    public List<AudioClip> mBackgroundAudio;
+    private AudioSource BackgroundSource;
+    public bool CopyrigthSong;
+    private bool songPlayed = false;
 
     private void Start()
     {
@@ -45,39 +60,62 @@ public class PlayerController : MonoBehaviour
         bloodObjectParticles = Resources.Load<GameObject>("BloodSplat_FX Variant");
         otherObjectParticles = Resources.Load<GameObject>("GunShot_Smoke_FX Variant");
 
-        mAnimator = transform
-            .GetComponentInChildren<Animator>(false);
+        mAnimator = transform.Find("Main Camera")
+            .Find("SM_Army_Shotgun")
+            .GetComponent<Animator>();
+
+        CameraAnimator = transform.Find("Main Camera").GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
 
-        mAudioSource = GetComponentInChildren<AudioSource>(false);
+        mAudioSource = transform
+            .Find("Main Camera")
+            .Find("SM_Army_Shotgun").GetComponent<AudioSource>();
+        BackgroundSource = transform
+            .Find("Main Camera").GetComponent<AudioSource>();
 
         RunnigMultiplier = 1.5f;
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl))
+        if (!IsDead)
         {
-            speed = WalkingSpeed * RunnigMultiplier;
+            if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl))
+            {
+                speed = WalkingSpeed * RunnigMultiplier;
+            }else
+            {
+                speed = WalkingSpeed;
+            }
+
+            mRb.velocity = mDirection.y * speed * transform.forward
+                + mDirection.x * speed * transform.right;
+
+            transform.Rotate(
+                Vector3.up,
+                turnSpeed * Time.deltaTime * mDeltaLook.x
+            );
+            cameraMain.GetComponent<CameraMovement>().RotateUpDown(
+                -turnSpeed * Time.deltaTime * mDeltaLook.y
+            );
         }else
         {
-            speed = WalkingSpeed;
+            PlayerCapsulle.SetActive(false);
+            shotgun.SetActive(false);
+            UI.gameObject.SetActive(false);
+            DeadScreen.gameObject.SetActive(true);
+            if(CopyrigthSong && !songPlayed)
+            {
+                BackgroundSource.PlayOneShot(mBackgroundAudio[0]);
+                songPlayed = true;
+            }else if (!CopyrigthSong && !songPlayed)
+            {
+                BackgroundSource.PlayOneShot(mBackgroundAudio[1]);
+                songPlayed = true;
+            }
         }
-
-        mRb.velocity = mDirection.y * speed * transform.forward
-            + mDirection.x * speed * transform.right;
-
-        transform.Rotate(
-            Vector3.up,
-            turnSpeed * Time.deltaTime * mDeltaLook.x
-        );
-        cameraMain.GetComponent<CameraMovement>().RotateUpDown(
-            -turnSpeed * Time.deltaTime * mDeltaLook.y
-        );
-    
     }
-
     private void OnMove(InputValue value)
     {
         mDirection = value.Get<Vector2>();
@@ -90,12 +128,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnFire(InputValue value)
     {
-        if (value.isPressed)
+        if(!IsDead)
         {
-            mAudioSource.PlayOneShot(audioList[0]);
-            mAnimator.SetTrigger("GunShooting");
-            Shoot();
+            if (value.isPressed)
+            {
+                mAudioSource.PlayOneShot(audioList[0]);
+                mAnimator.SetTrigger("GunShooting");
+                Shoot();
+            } 
         }
+        
     }
 
     private void Shoot()
@@ -132,8 +174,9 @@ public class PlayerController : MonoBehaviour
         PlayerHealth -= Damage;
         if (PlayerHealth <= 0)
         {
-            // fin del juego
-            Debug.Log("Fin del juego");
+            CameraAnimator.SetBool("IsDead", true);
+            IsDead = true;
+            // Llamar a la animacion de la camara de endgame y que esta se bloquee
         }
     }
 
@@ -141,8 +184,7 @@ public class PlayerController : MonoBehaviour
     {
         if (col.CompareTag("EnemyAttack"))
         {
-            Debug.Log("Player recibio daño");
-            TakeDamage(-1f);
+            TakeDamage(1f);
         }
     }
 }

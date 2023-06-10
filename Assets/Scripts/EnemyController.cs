@@ -27,6 +27,9 @@ public class EnemyController : MonoBehaviour
     public GameObject HitboxLeft;
     private CapsuleCollider mCollider;
     private NavMeshAgent navMeshAgent;
+    [SerializeField]
+
+    private PlayerController playerController;
 
     private void Start()
     {
@@ -40,47 +43,53 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        //mAudioSource.PlayOneShot(audioList[Random.Range(0,2)]);
-
-        var collider1 = IsPlayerInAttackArea();
-        if (collider1 != null && !mIsAttacking && !dead)
+        if (!playerController.IsDead)
         {
-            mRb.velocity = new Vector3(
-                0f,
-                0f,
-                0f
-            );
-            //mAudioSource.PlayOneShot(audioList[Random.Range(2,4)]);
-            navMeshAgent.isStopped = true;
-            mAnimator.SetBool("IsWalking", false);
-            mAnimator.SetTrigger("Attacking");
-            mAnimator.SetInteger("RandomAttack", 0); //Random.Range(0,3)
-            return;
+            //mAudioSource.PlayOneShot(audioList[Random.Range(0,2)]);
+
+            var collider1 = IsPlayerInAttackArea();
+            if (collider1 != null && !mIsAttacking && !dead)
+            {
+                mRb.velocity = new Vector3(
+                    0f,
+                    0f,
+                    0f
+                );
+                //mAudioSource.PlayOneShot(audioList[Random.Range(2,4)]);
+                navMeshAgent.isStopped = true;
+                mAnimator.SetBool("IsWalking", false);
+                mAnimator.SetTrigger("Attacking");
+                mAnimator.SetInteger("RandomAttack", Random.Range(0,3));
+                return;
+            }
+            
+            
+            var collider2 = IsPlayerNearby();
+
+            if (collider2 != null && !mIsAttacking && !dead)
+            {
+                mAnimator.SetBool("IsWalking", true);
+                navMeshAgent.isStopped = false;
+                navMeshAgent.SetDestination(collider2.transform.position);
+                //Walk(collider2);
+            }
+            else
+            {
+                // parar
+                mRb.velocity = Vector3.zero;
+                mAnimator.SetBool("IsWalking", false);
+                navMeshAgent.isStopped = true;
+            }
+        }else
+        {
+            Destroy(gameObject, 5f);
         }
         
-        
-        var collider2 = IsPlayerNearby();
-
-        if (collider2 != null && !mIsAttacking && !dead)
-        {
-            mAnimator.SetBool("IsWalking", true);
-            navMeshAgent.isStopped = false;
-            navMeshAgent.SetDestination(collider2.transform.position);
-            //Walk(collider2);
-            mAnimator.SetFloat("Horizontal", mDirection.x);
-            mAnimator.SetFloat("Vertical", mDirection.y);
-        }
-        else
-        {
-            // parar
-            mRb.velocity = Vector3.zero;
-            mAnimator.SetBool("IsWalking", false);
-            navMeshAgent.isStopped = true;
-        }
     }
 
     private void Walk(Collider collider2)
     {
+        Debug.Log("En funcion Walk");
         // caminar
         var playerPosition = collider2.transform.position;
         var direction = playerPosition - transform.position;
