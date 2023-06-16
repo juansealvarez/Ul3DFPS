@@ -13,7 +13,6 @@ public class CameraMovement : MonoBehaviour
             transform.rotation.eulerAngles.y,
             transform.rotation.eulerAngles.z
         );
-
         newRotation.x = newRotation.x > 180f ? newRotation.x - 360f : newRotation.x;
         newRotation.x = Mathf.Clamp(newRotation.x, MinRot, MaxRot);
 

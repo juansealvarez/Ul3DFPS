@@ -22,11 +22,9 @@ public class AimShotgun : MonoBehaviour
         float aiming = AimingSpeed * Time.deltaTime;
         if (Input.GetKey("mouse 1"))
         {
-            mAnimator.SetBool("IsAiming", true);
            transform.position = Vector3.MoveTowards(transform.position, targetAim.position, aiming);
         }else
         {
-            mAnimator.SetBool("IsAiming", false);
            transform.position = Vector3.MoveTowards(transform.position, targetNoAim.position, aiming);
         }
     }

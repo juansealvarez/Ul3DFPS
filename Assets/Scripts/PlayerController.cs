@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
             .Find("Main Camera").GetComponent<AudioSource>();
 
         RunnigMultiplier = 1.5f;
+        CameraAnimator.enabled = false;
     }
 
     private void Update()
@@ -174,9 +175,9 @@ public class PlayerController : MonoBehaviour
         PlayerHealth -= Damage;
         if (PlayerHealth <= 0)
         {
+            CameraAnimator.enabled = true;
             CameraAnimator.SetBool("IsDead", true);
             IsDead = true;
-            // Llamar a la animacion de la camara de endgame y que esta se bloquee
         }
     }
 
