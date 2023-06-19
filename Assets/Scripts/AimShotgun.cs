@@ -11,21 +11,41 @@ public class AimShotgun : MonoBehaviour
     public Transform LookCamera;
 
     private Animator mAnimator;
+    private Animator gAnimator;
+    public WeaponsSO Weapon;
+    public bool WeaponActive;
+    public GameObject WeaponToActivate;
+    public ParticleSystem shootPS;
 
     private void Start()
     {
         mAnimator = LookCamera.GetComponent<Animator>();
+        gAnimator = GetComponent<Animator>();
+        if (WeaponActive)
+        {
+            gameObject.SetActive(true);
+        }else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void Update()
     {
         float aiming = AimingSpeed * Time.deltaTime;
-        if (Input.GetKey("mouse 1"))
+        if (Input.GetKey(KeyCode.Mouse1))
         {
-           transform.position = Vector3.MoveTowards(transform.position, targetAim.position, aiming);
+            transform.position = Vector3.MoveTowards(transform.position, targetAim.position, aiming);
         }else
         {
-           transform.position = Vector3.MoveTowards(transform.position, targetNoAim.position, aiming);
+            transform.position = Vector3.MoveTowards(transform.position, targetNoAim.position, aiming);
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            WeaponActive = false;
+            WeaponToActivate.GetComponent<AimShotgun>().WeaponActive = true;
+            gameObject.SetActive(false);
+            WeaponToActivate.gameObject.SetActive(true);
         }
     }
 }

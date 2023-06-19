@@ -10,15 +10,15 @@ public class PlayerController : MonoBehaviour
 
     private float RunnigMultiplier;
     [SerializeField]
-    private float shootDistance = 4f;
-    [SerializeField]
-    private ParticleSystem shootPS;
+    //private float shootDistance = 4f;
+    //[SerializeField]
+    //private ParticleSystem shootPS;
 
     private float speed;
     [SerializeField]
     public float turnSpeed;
     public float PlayerHealth = 20f;
-    public float GunDamage = 1f;
+    //public float GunDamage = 1f;
 
     private Rigidbody mRb;
     private Vector2 mDirection;
@@ -33,12 +33,10 @@ public class PlayerController : MonoBehaviour
     private Animator CameraAnimator;
 
     private AudioSource mAudioSource;
-    [SerializeField]
-    private List<AudioClip> audioList;
+    //[SerializeField]
+    //private List<AudioClip> audioList;
     [System.NonSerialized]
     public bool IsDead = false;
-
-    private Transform gun;
 
     public GameObject PlayerCapsulle;
     public GameObject shotgun;
@@ -50,6 +48,10 @@ public class PlayerController : MonoBehaviour
     private AudioSource BackgroundSource;
     public bool CopyrigthSong;
     private bool songPlayed = false;
+    private AimShotgun aimShotgun;
+    private AimShotgun aimPistol;
+    private AudioSource pAudioSource;
+    private Animator pAnimator;
 
     private void Start()
     {
@@ -59,9 +61,15 @@ public class PlayerController : MonoBehaviour
         debugImpactSphere = Resources.Load<GameObject>("DebugImpactSphere");
         bloodObjectParticles = Resources.Load<GameObject>("BloodSplat_FX Variant");
         otherObjectParticles = Resources.Load<GameObject>("GunShot_Smoke_FX Variant");
+        aimShotgun = transform.Find("Main Camera").Find("SM_Army_Shotgun").GetComponent<AimShotgun>();
+        aimPistol = transform.Find("Main Camera").Find("SM_Army_Pistol").GetComponent<AimShotgun>();
 
         mAnimator = transform.Find("Main Camera")
             .Find("SM_Army_Shotgun")
+            .GetComponent<Animator>();
+
+        pAnimator = transform.Find("Main Camera")
+            .Find("SM_Army_Pistol")
             .GetComponent<Animator>();
 
         CameraAnimator = transform.Find("Main Camera").GetComponent<Animator>();
@@ -73,6 +81,9 @@ public class PlayerController : MonoBehaviour
             .Find("SM_Army_Shotgun").GetComponent<AudioSource>();
         BackgroundSource = transform
             .Find("Main Camera").GetComponent<AudioSource>();
+        pAudioSource = transform
+            .Find("Main Camera")
+            .Find("SM_Army_Pistol").GetComponent<AudioSource>();
 
         RunnigMultiplier = 1.5f;
         CameraAnimator.enabled = false;
@@ -133,24 +144,40 @@ public class PlayerController : MonoBehaviour
         {
             if (value.isPressed)
             {
-                mAudioSource.PlayOneShot(audioList[0]);
-                mAnimator.SetTrigger("GunShooting");
-                Shoot();
-            } 
+                if(aimShotgun.WeaponActive)
+                {
+                    mAudioSource.PlayOneShot(aimShotgun.Weapon.audioList[0]);
+                    mAnimator.SetTrigger("GunShooting");
+                    Shoot();
+                }else
+                {
+                    pAudioSource.PlayOneShot(aimPistol.Weapon.audioList[0]);
+                    pAnimator.SetTrigger("GunShooting");
+                    Shoot();
+                }
+            }
         }
         
     }
 
     private void Shoot()
     {
-        shootPS.Play();
+        var scriptGun = aimShotgun;
+        if (aimShotgun.WeaponActive)
+        {
+            scriptGun = aimShotgun;
+        }else
+        {
+            scriptGun = aimPistol;
+        }
+        scriptGun.shootPS.Play();
 
         RaycastHit hit;
         if (Physics.Raycast(
             cameraMain.position,
             cameraMain.forward,
             out hit,
-            shootDistance
+            scriptGun.Weapon.shootDistance
         ))
         {
             //var debugSphere = Instantiate(debugImpactSphere, hit.point, Quaternion.identity);
@@ -160,7 +187,7 @@ public class PlayerController : MonoBehaviour
                 var bloodPS = Instantiate(bloodObjectParticles, hit.point, Quaternion.identity);
                 Destroy(bloodPS, 3f);
                 var enemyController = hit.collider.GetComponent<EnemyController>();
-                enemyController.TakeDamage(GunDamage);
+                enemyController.TakeDamage(scriptGun.Weapon.GunDamage);
             }else
             {
                 var otherPS = Instantiate(otherObjectParticles, hit.point, Quaternion.identity);
