@@ -22,11 +22,10 @@ public class EnemyController : MonoBehaviour
     private CapsuleCollider mCollider;
     private NavMeshAgent navMeshAgent;
 
-    [SerializeField]
-
-    private PlayerController playerController;
+    public PlayerController playerController;
     public EnemySO EnemyType;
     public static float damage;
+    private float salud;
 
     private void Start()
     {
@@ -37,6 +36,7 @@ public class EnemyController : MonoBehaviour
         mCollider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         damage = EnemyType.Damage;
+        salud = EnemyType.Health;
     }
 
     private void Update()
@@ -150,8 +150,8 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float Damage)
     {
-        EnemyType.Health -= Damage;
-        if (EnemyType.Health  == 0f)
+        salud -= Damage;
+        if (salud  == 0f)
         {
             mAnimator.SetTrigger("Die");
             mCollider.enabled = false;

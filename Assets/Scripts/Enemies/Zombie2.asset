@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e54fbe9b4a65d24f953e3ee59af8125, type: 3}
   m_Name: Zombie2
   m_EditorClassIdentifier: 
-  Tipo: 
+  Tipo: Monstruo
   Speed: 1
   AwakeRadio: 2
   AttackRadio: 0.5

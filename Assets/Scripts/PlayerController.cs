@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
     public bool IsDead = false;
 
     public GameObject PlayerCapsulle;
-    public GameObject shotgun;
+    public GameObject primary;
+    public GameObject secondary;
 
     public GameObject DeadScreen;
     public GameObject UI;
@@ -110,7 +111,8 @@ public class PlayerController : MonoBehaviour
         }else
         {
             PlayerCapsulle.SetActive(false);
-            shotgun.SetActive(false);
+            primary.SetActive(false);
+            secondary.SetActive(false);
             UI.gameObject.SetActive(false);
             DeadScreen.gameObject.SetActive(true);
             if(CopyrigthSong && !songPlayed)

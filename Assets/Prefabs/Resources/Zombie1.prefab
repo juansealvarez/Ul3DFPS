@@ -80,10 +80,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  Speed: 1
-  AwakeRadio: 3
-  AttackRadio: 0.5
-  Health: 5
   audioList:
   - {fileID: 8300000, guid: 9d7d56ec3459c6444a62238d1b3cb19b, type: 3}
   - {fileID: 8300000, guid: 1bb3c441046f9b240a42649e17e7926c, type: 3}

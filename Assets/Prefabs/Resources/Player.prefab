@@ -530,7 +530,8 @@ MonoBehaviour:
   speed: 0
   turnSpeed: 10
   PlayerCapsulle: {fileID: 5754121768167365694}
-  shotgun: {fileID: 5217551596276825646}
+  primary: {fileID: 5217551596276825646}
+  secondary: {fileID: 190487093081356582}
   DeadScreen: {fileID: 0}
   UI: {fileID: 0}
   mBackgroundAudio:
