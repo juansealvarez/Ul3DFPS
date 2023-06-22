@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private float speed;
     [SerializeField]
     public float turnSpeed;
-    public float PlayerHealth = 20f;
+    public static float PlayerHealth = 20f;
     //public float GunDamage = 1f;
 
     private Rigidbody mRb;
