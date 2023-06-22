@@ -17,4 +17,4 @@ MonoBehaviour:
   AwakeRadio: 2
   AttackRadio: 0.5
   Health: 10
-  Damage: 2.5
+  Damage: 5

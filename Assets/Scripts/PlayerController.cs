@@ -10,15 +10,11 @@ public class PlayerController : MonoBehaviour
 
     private float RunnigMultiplier;
     [SerializeField]
-    //private float shootDistance = 4f;
-    //[SerializeField]
-    //private ParticleSystem shootPS;
 
     private float speed;
     [SerializeField]
     public float turnSpeed;
     public static float PlayerHealth = 20f;
-    //public float GunDamage = 1f;
 
     private Rigidbody mRb;
     private Vector2 mDirection;
