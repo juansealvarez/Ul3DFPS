@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
     {
         if (col.CompareTag("EnemyAttack"))
         {
-            TakeDamage(1f);
+            TakeDamage(EnemyController.damage);
         }
     }
 }

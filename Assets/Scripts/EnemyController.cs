@@ -7,12 +7,6 @@ public class EnemyController : MonoBehaviour
 {
     public Transform Player;
 
-    public float Speed = 2f;
-    public float AwakeRadio = 2f;
-
-    public float AttackRadio = 0.5f;
-    public float Health = 5f;
-
     private Animator mAnimator;
     private Rigidbody mRb;
 
@@ -27,9 +21,12 @@ public class EnemyController : MonoBehaviour
     public GameObject HitboxLeft;
     private CapsuleCollider mCollider;
     private NavMeshAgent navMeshAgent;
+
     [SerializeField]
 
     private PlayerController playerController;
+    public EnemySO EnemyType;
+    public static float damage;
 
     private void Start()
     {
@@ -39,6 +36,7 @@ public class EnemyController : MonoBehaviour
         mAudioSource = GetComponent<AudioSource>();
         mCollider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        damage = EnemyType.Damage;
     }
 
     private void Update()
@@ -102,9 +100,9 @@ public class EnemyController : MonoBehaviour
         );
 
         mRb.velocity = new Vector3(
-            mDirection.x * Speed,
+            mDirection.x * EnemyType.Speed,
             0f,
-            mDirection.y * Speed
+            mDirection.y * EnemyType.Speed
         );
 
         mAnimator.SetBool("IsWalking", true);
@@ -116,7 +114,7 @@ public class EnemyController : MonoBehaviour
     {
         var colliders = Physics.OverlapSphere(
             transform.position,
-            AwakeRadio,
+            EnemyType.AwakeRadio,
             LayerMask.GetMask("Player")
         );
         if (colliders.Length == 1) return colliders[0];
@@ -127,7 +125,7 @@ public class EnemyController : MonoBehaviour
     {
         var colliders = Physics.OverlapSphere(
             transform.position,
-            AttackRadio,
+            EnemyType.AttackRadio,
             LayerMask.GetMask("Player")
         );
         if (colliders.Length == 1) return colliders[0];
@@ -152,8 +150,8 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float Damage)
     {
-        Health -= Damage;
-        if (Health == 0f)
+        EnemyType.Health -= Damage;
+        if (EnemyType.Health  == 0f)
         {
             mAnimator.SetTrigger("Die");
             mCollider.enabled = false;
