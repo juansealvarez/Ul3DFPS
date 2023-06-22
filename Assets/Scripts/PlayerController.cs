@@ -43,12 +43,13 @@ public class PlayerController : MonoBehaviour
 
     public List<AudioClip> mBackgroundAudio;
     private AudioSource BackgroundSource;
-    public bool CopyrigthSong;
     private bool songPlayed = false;
     private AimShotgun aimShotgun;
     private AimShotgun aimPistol;
     private AudioSource pAudioSource;
     private Animator pAnimator;
+    [SerializeField]
+    private GameManager gameManager;
 
     private void Start()
     {
@@ -115,11 +116,12 @@ public class PlayerController : MonoBehaviour
             secondary.SetActive(false);
             UI.gameObject.SetActive(false);
             DeadScreen.gameObject.SetActive(true);
-            if(CopyrigthSong && !songPlayed)
+            gameManager.enabled = false;
+            if(gameManager.CopyrigthSong && !songPlayed)
             {
                 BackgroundSource.PlayOneShot(mBackgroundAudio[0]);
                 songPlayed = true;
-            }else if (!CopyrigthSong && !songPlayed)
+            }else if (!gameManager.CopyrigthSong && !songPlayed)
             {
                 BackgroundSource.PlayOneShot(mBackgroundAudio[1]);
                 songPlayed = true;

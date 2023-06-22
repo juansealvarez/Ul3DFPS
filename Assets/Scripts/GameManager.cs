@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,13 +14,46 @@ public class GameManager : MonoBehaviour
     public float SpawnRadius = 5f;
 
     public static GameManager Instance { private set; get; }
+    private float timer;
+    private float timerFijo = 10f;
+    private int Ronda = 0;
+    public GameObject RondaUI;
+    public bool CopyrigthSong = false;
+    public List<AudioClip> mBackgroundAudio;
+    private AudioSource BackgroundSource;
     private void Awake()
     {
         Instance = this;
     }
     private void Start()
     {
-        SpawnEnemies();
+        timer = timerFijo;
+        BackgroundSource = transform
+            .GetComponent<AudioSource>();
+    }
+    private void Update()
+    {
+        timer -= Time.deltaTime;
+        if (timer < 0f)
+        {
+            Ronda++;
+            RondaUI.GetComponent<TextMeshProUGUI>().text = Ronda.ToString();
+            if (CopyrigthSong)
+            {
+                BackgroundSource.PlayOneShot(mBackgroundAudio[0]);
+                //songPlayed = true;
+            }
+            //Sonido Cambio Ronda
+            SpawnEnemies();
+            if(timerFijo > 10f)
+            {
+                timerFijo -= 5f;
+                timer = timerFijo;
+            }else
+            {
+                timer = timerFijo;
+            }
+        }
     }
 
     private void SpawnEnemies()

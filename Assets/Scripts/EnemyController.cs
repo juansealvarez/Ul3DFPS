@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        
         if (!playerController.IsDead)
         {
             //mAudioSource.PlayOneShot(audioList[Random.Range(0,2)]);
