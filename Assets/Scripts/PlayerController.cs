@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     private Animator pAnimator;
     [SerializeField]
     private GameManager gameManager;
+    private PlayerInput mPlayerInput;
 
     private void Start()
     {
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
             .GetComponent<Animator>();
 
         CameraAnimator = transform.Find("Main Camera").GetComponent<Animator>();
+        mPlayerInput = GetComponent<PlayerInput>();
 
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -142,7 +144,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!IsDead)
         {
-            if (value.isPressed)
+            if (value.isPressed && !MenuPausa.isPaused)
             {
                 if(aimShotgun.WeaponActive)
                 {
@@ -202,6 +204,7 @@ public class PlayerController : MonoBehaviour
         PlayerHealth -= Damage;
         if (PlayerHealth <= 0)
         {
+            mPlayerInput.SwitchCurrentActionMap("PauseMenu");
             CameraAnimator.enabled = true;
             CameraAnimator.SetBool("IsDead", true);
             IsDead = true;

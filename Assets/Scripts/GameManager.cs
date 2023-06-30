@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { private set; get; }
     private float timer;
-    private float timerFijo = 60f;
+    private float timerFijo = 10f;
     private int Ronda = 0;
     public GameObject RondaUI;
     public bool CopyrigthSong = false;
