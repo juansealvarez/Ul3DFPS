@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private int Ronda = 0;
     public GameObject RondaUI;
     public bool CopyrigthSong = false;
-    public List<AudioClip> mBackgroundAudio;
+    public List<AudioClip> BackgroundAudio;
     private AudioSource BackgroundSource;
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             RondaUI.GetComponent<TextMeshProUGUI>().text = Ronda.ToString();
             if (CopyrigthSong)
             {
-                BackgroundSource.PlayOneShot(mBackgroundAudio[0]);
+                BackgroundSource.PlayOneShot(BackgroundAudio[0]);
                 //songPlayed = true;
             }
             //Sonido Cambio Ronda

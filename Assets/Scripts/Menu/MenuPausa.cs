@@ -18,9 +18,11 @@ public class MenuPausa : MonoBehaviour
         {
             if (isPaused)
             {
+                PlayerController.mPlayerInput.SwitchCurrentActionMap("Player");
                 ReanudarJuego();
             }else
             {
+                PlayerController.mPlayerInput.SwitchCurrentActionMap("PauseMenu");
                 PausarJuego();
             }
         }

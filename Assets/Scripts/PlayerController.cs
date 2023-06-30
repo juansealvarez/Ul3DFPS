@@ -50,7 +50,8 @@ public class PlayerController : MonoBehaviour
     private Animator pAnimator;
     [SerializeField]
     private GameManager gameManager;
-    private PlayerInput mPlayerInput;
+    [System.NonSerialized]
+    public static PlayerInput mPlayerInput;
 
     private void Start()
     {
@@ -93,24 +94,28 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsDead)
         {
-            if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl))
+            if (!MenuPausa.isPaused)
             {
-                speed = WalkingSpeed * RunnigMultiplier;
-            }else
-            {
-                speed = WalkingSpeed;
+                if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl))
+                {
+                    speed = WalkingSpeed * RunnigMultiplier;
+                }else
+                {
+                    speed = WalkingSpeed;
+                }
+
+                mRb.velocity = mDirection.y * speed * transform.forward
+                    + mDirection.x * speed * transform.right;
+
+                transform.Rotate(
+                    Vector3.up,
+                    turnSpeed * Time.deltaTime * mDeltaLook.x
+                );
+                cameraMain.GetComponent<CameraMovement>().RotateUpDown(
+                    -turnSpeed * Time.deltaTime * mDeltaLook.y
+                );
             }
-
-            mRb.velocity = mDirection.y * speed * transform.forward
-                + mDirection.x * speed * transform.right;
-
-            transform.Rotate(
-                Vector3.up,
-                turnSpeed * Time.deltaTime * mDeltaLook.x
-            );
-            cameraMain.GetComponent<CameraMovement>().RotateUpDown(
-                -turnSpeed * Time.deltaTime * mDeltaLook.y
-            );
+            
         }else
         {
             PlayerCapsulle.SetActive(false);
@@ -144,19 +149,23 @@ public class PlayerController : MonoBehaviour
     {
         if(!IsDead)
         {
-            if (value.isPressed && !MenuPausa.isPaused)
+            if (value.isPressed)
             {
-                if(aimShotgun.WeaponActive)
+                if(!MenuPausa.isPaused)
                 {
-                    mAudioSource.PlayOneShot(aimShotgun.Weapon.audioList[0]);
-                    mAnimator.SetTrigger("GunShooting");
-                    Shoot();
-                }else
-                {
-                    pAudioSource.PlayOneShot(aimPistol.Weapon.audioList[0]);
-                    pAnimator.SetTrigger("GunShooting");
-                    Shoot();
+                    if(aimShotgun.WeaponActive)
+                    {
+                        mAudioSource.PlayOneShot(aimShotgun.Weapon.audioList[0]);
+                        mAnimator.SetTrigger("GunShooting");
+                        Shoot();
+                    }else
+                    {
+                        pAudioSource.PlayOneShot(aimPistol.Weapon.audioList[0]);
+                        pAnimator.SetTrigger("GunShooting");
+                        Shoot();
+                    }
                 }
+                
             }
         }
         
