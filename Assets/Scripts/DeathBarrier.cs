@@ -9,7 +9,7 @@ public class DeathBarrier : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            playerController.TakeDamage(PlayerController.PlayerHealth);
+            playerController.TakeDamage(PlayerController.Instance.PlayerHealth);
         }
     }
 }

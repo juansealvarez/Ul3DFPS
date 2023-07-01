@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Tipo: Monstruo
   Speed: 1
-  AwakeRadio: 2
+  AwakeRadio: 100
   AttackRadio: 0.5
   Health: 10
   Damage: 5

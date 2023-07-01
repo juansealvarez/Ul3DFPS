@@ -9,4 +9,6 @@ public class WeaponsSO : ScriptableObject
     public float GunDamage;
     public List<AudioClip> audioList;
     public float shootDistance;
+    public float balasCargador;
+    public float balas;
 }

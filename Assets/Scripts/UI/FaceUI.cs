@@ -14,13 +14,13 @@ public class FaceUI : MonoBehaviour
     private float saludInicial;
     private void Start()
     {
-        saludInicial = PlayerController.PlayerHealth;
+        saludInicial = PlayerController.Instance.PlayerHealth;
         saludActual = saludInicial;
     }
 
     private void Update()
     {
-        saludActual = PlayerController.PlayerHealth;
+        saludActual = PlayerController.Instance.PlayerHealth;
         if(saludActual == saludInicial)
         {
             image.sprite = imagesStates[0];

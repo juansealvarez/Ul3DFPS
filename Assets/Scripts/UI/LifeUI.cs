@@ -10,14 +10,14 @@ public class LifeUI : MonoBehaviour
     private float lifePercentage;
     private void Start()
     {
-        saludInicial = PlayerController.PlayerHealth;
+        saludInicial = PlayerController.Instance.PlayerHealth;
         saludActual = saludInicial;
         lifePercentage = 100f;
     }
 
     private void Update()
     {
-        saludActual = PlayerController.PlayerHealth;
+        saludActual = PlayerController.Instance.PlayerHealth;
         lifePercentage = (saludActual/saludInicial)*100;
         GetComponent<TextMeshProUGUI>().text = lifePercentage.ToString()+"%";
     }

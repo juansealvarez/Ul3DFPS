@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "f7b9175f-3734-421d-8289-0824b0022bd5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -253,6 +262,17 @@
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6635764e-dc48-403d-aa71-d6e4c8eb7db9",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -261,7 +281,7 @@
             "id": "2422f995-9e1a-40b0-a38c-bf3289a1a6e7",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Play",
                     "type": "Button",
                     "id": "93d01530-e0e2-4ee1-bc54-c356039d66e4",
                     "expectedControlType": "Button",
@@ -274,11 +294,11 @@
                 {
                     "name": "",
                     "id": "26387904-1d65-4d81-874e-4d28514936fb",
-                    "path": "",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Play",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

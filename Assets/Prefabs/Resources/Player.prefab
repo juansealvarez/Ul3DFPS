@@ -527,17 +527,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WalkingSpeed: 4
-  speed: 0
   turnSpeed: 10
+  PlayerHealth: 20
   PlayerCapsulle: {fileID: 5754121768167365694}
   primary: {fileID: 5217551596276825646}
   secondary: {fileID: 190487093081356582}
   DeadScreen: {fileID: 0}
   UI: {fileID: 0}
-  mBackgroundAudio:
+  BackgroundAudio:
   - {fileID: 8300000, guid: a7c9f6ad2cadd88438c64d4bfc827b1a, type: 3}
   - {fileID: 8300000, guid: 063c9f13dab1bf14da3554e803e8ab04, type: 3}
-  CopyrigthSong: 1
+  gameManager: {fileID: 0}
 --- !u!114 &5754121767953507422
 MonoBehaviour:
   m_ObjectHideFlags: 0

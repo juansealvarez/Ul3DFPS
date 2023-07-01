@@ -17,4 +17,5 @@ MonoBehaviour:
   audioList:
   - {fileID: 8300000, guid: c1af5ee6628e2174a92336161f5ece32, type: 3}
   shootDistance: 4
-  shootPS: {fileID: 5623136790348089138, guid: a0045934b507fb24eb5ca13b91cf6633, type: 3}
+  balasCargador: 12
+  balas: 60

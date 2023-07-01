@@ -5,16 +5,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance { private set; get; }
     [SerializeField]
     private float WalkingSpeed;
 
     private float RunnigMultiplier;
-    [SerializeField]
 
-    private float speed;
+    private float speed = 0f;
     [SerializeField]
     public float turnSpeed;
-    public static float PlayerHealth = 20f;
+    public float PlayerHealth = 20f;
 
     private Rigidbody mRb;
     private Vector2 mDirection;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     public GameObject DeadScreen;
     public GameObject UI;
 
-    public List<AudioClip> mBackgroundAudio;
+    public List<AudioClip> BackgroundAudio;
     private AudioSource BackgroundSource;
     private bool songPlayed = false;
     private AimShotgun aimShotgun;
@@ -52,7 +52,10 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     [System.NonSerialized]
     public static PlayerInput mPlayerInput;
-
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         mRb = GetComponent<Rigidbody>();
@@ -126,11 +129,11 @@ public class PlayerController : MonoBehaviour
             gameManager.enabled = false;
             if(gameManager.CopyrigthSong && !songPlayed)
             {
-                BackgroundSource.PlayOneShot(mBackgroundAudio[0]);
+                BackgroundSource.PlayOneShot(BackgroundAudio[0]);
                 songPlayed = true;
             }else if (!gameManager.CopyrigthSong && !songPlayed)
             {
-                BackgroundSource.PlayOneShot(mBackgroundAudio[1]);
+                BackgroundSource.PlayOneShot(BackgroundAudio[1]);
                 songPlayed = true;
             }
         }
@@ -151,6 +154,7 @@ public class PlayerController : MonoBehaviour
         {
             if (value.isPressed)
             {
+                Debug.Log("Se hizo click...");
                 if(!MenuPausa.isPaused)
                 {
                     if(aimShotgun.WeaponActive)
@@ -225,6 +229,20 @@ public class PlayerController : MonoBehaviour
         if (col.CompareTag("EnemyAttack"))
         {
             TakeDamage(EnemyController.damage);
+        }
+    }
+    private void OnPause(InputValue value)
+    {
+        if(value.isPressed)
+        {
+            MenuPausa.Instance.PausarJuego();
+        }
+    }
+    private void OnPlay(InputValue value)
+    {
+        if(value.isPressed)
+        {
+            MenuPausa.Instance.ReanudarJuego();
         }
     }
 }

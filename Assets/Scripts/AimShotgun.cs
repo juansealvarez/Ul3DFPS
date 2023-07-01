@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AimShotgun : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class AimShotgun : MonoBehaviour
     public bool WeaponActive;
     public GameObject WeaponToActivate;
     public ParticleSystem shootPS;
+    public TextMeshProUGUI arma;
+    public TextMeshProUGUI balas;
 
     private void Start()
     {
@@ -32,6 +35,8 @@ public class AimShotgun : MonoBehaviour
 
     private void Update()
     {
+        arma.text = Weapon.GunName;
+        balas.text = Weapon.balasCargador.ToString() + "/" + Weapon.balas.ToString();
         float aiming = AimingSpeed * Time.deltaTime;
         if (Input.GetKey(KeyCode.Mouse1))
         {
