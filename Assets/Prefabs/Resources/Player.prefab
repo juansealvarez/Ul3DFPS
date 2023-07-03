@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5754121766327006052}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 22.857502, z: -0.009999983}
+  m_LocalPosition: {x: 0, y: 59.6, z: -0}
   m_LocalScale: {x: 2.5, y: 2.4999998, z: 2.4999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -94,7 +94,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 631
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 4d015010bbab59941bdbab9efaf0d034, type: 2}
   m_TargetDisplay: 7
@@ -166,7 +166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5754121766688879063}
   m_LocalRotation: {x: -1e-45, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.582, z: -0.043}
+  m_LocalPosition: {x: 0, y: 13.317, z: -0.043}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -211,7 +211,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 503
   m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 5754121767953507423}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -529,6 +529,7 @@ MonoBehaviour:
   WalkingSpeed: 4
   turnSpeed: 10
   PlayerHealth: 20
+  JumpSpeed: 20
   PlayerCapsulle: {fileID: 5754121768167365694}
   primary: {fileID: 5217551596276825646}
   secondary: {fileID: 190487093081356582}
@@ -625,7 +626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5754121768167365694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 12.735001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -958,6 +959,8 @@ MonoBehaviour:
   WeaponActive: 0
   WeaponToActivate: {fileID: 5217551596276825646}
   shootPS: {fileID: 131688905800547258}
+  arma: {fileID: 0}
+  balas: {fileID: 0}
 --- !u!4 &715913654190039964 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5059179477758357327, guid: b52a2a857d903434facf521b55ad8bfd, type: 3}
@@ -1313,6 +1316,8 @@ MonoBehaviour:
   WeaponActive: 1
   WeaponToActivate: {fileID: 190487093081356582}
   shootPS: {fileID: 5219594785974827277}
+  arma: {fileID: 0}
+  balas: {fileID: 0}
 --- !u!198 &5219594785974827277 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 555357341898524574, guid: b2b131297e001ff4b9e486d17091eb9c, type: 3}

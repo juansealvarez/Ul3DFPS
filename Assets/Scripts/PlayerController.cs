@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public float turnSpeed;
     public float PlayerHealth = 20f;
+    [SerializeField]
+    private float JumpSpeed = 10f;
 
     private Rigidbody mRb;
     private Vector2 mDirection;
@@ -52,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     [System.NonSerialized]
     public static PlayerInput mPlayerInput;
+    private bool canJump = true;
     private void Awake()
     {
         Instance = this;
@@ -117,6 +120,13 @@ public class PlayerController : MonoBehaviour
                 cameraMain.GetComponent<CameraMovement>().RotateUpDown(
                     -turnSpeed * Time.deltaTime * mDeltaLook.y
                 );
+                if (mRb.velocity.y != 0)
+                {
+                    canJump = false;
+                }else
+                {
+                    canJump = true;
+                }
             }
             
         }else
@@ -233,16 +243,49 @@ public class PlayerController : MonoBehaviour
     }
     private void OnPause(InputValue value)
     {
-        if(value.isPressed)
+        if(!IsDead)
         {
-            MenuPausa.Instance.PausarJuego();
+            if(value.isPressed)
+            {
+                MenuPausa.Instance.PausarJuego();
+            }
         }
+        
     }
     private void OnPlay(InputValue value)
     {
-        if(value.isPressed)
+        if(!IsDead)
         {
-            MenuPausa.Instance.ReanudarJuego();
+            if(value.isPressed)
+            {
+                MenuPausa.Instance.ReanudarJuego();
+            }
+        }
+        
+    }
+
+    private void OnJump(InputValue value)
+    {
+        if(!IsDead)
+        {
+            if(!MenuPausa.isPaused)
+            {
+                if(canJump)
+                {
+                    if(value.isPressed)
+                    {
+                        Debug.Log("saltando...");
+                        // Saltar
+                        /*mRb.velocity = new Vector3(
+                            mRb.velocity.x,
+                            JumpSpeed,
+                            mRb.velocity.z
+                            
+                        );*/
+                        mRb.AddForce(new Vector3(0f, JumpSpeed, 0f), ForceMode.Impulse);
+                    }
+                }
+            }
         }
     }
 }

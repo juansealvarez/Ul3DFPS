@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        timer -= Time.deltaTime;
+        /*timer -= Time.deltaTime;
         if (timer < 0f)
         {
             Ronda++;
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 timer = timerFijo;
             }
-        }
+        }*/
     }
 
     private void SpawnEnemies()
